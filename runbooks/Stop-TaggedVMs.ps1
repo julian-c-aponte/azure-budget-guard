@@ -11,7 +11,7 @@
     VM is actually touched.
 
 .NOTES
-    Runtime: PowerShell 7.4
+    Runtime: PowerShell 7.2
     Auth:    System-assigned managed identity
     RBAC:    Virtual Machine Contributor on the target scope
 #>
