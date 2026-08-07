@@ -14,17 +14,4 @@ This project implements a missing enforcement layer for Dev/Test and Sandbox env
 
 The core of this system is built on **Azure Automation** (a managed PowerShell execution environment) prioritizing least-privilege security.
 
-```mermaid
-graph TD;
-    A[Azure Cost Management] -->|Crosses Threshold| B(Action Group)
-    B -->|POST Webhook| C[Azure Automation Runbook]
-    
-    D[Time Schedule: 22:00] -->|Triggers| C
-    
-    C -->|Authenticates via| E{System-Assigned Managed Identity}
-    E -->|Virtual Machine Contributor RBAC| F[Target Resource Group]
-    
-    F -->|Shuts down| G[VMs missing 'Exempt' Tag]
-    F -->|Ignores| H[Exempt VMs]
-    
-    C -->|Sends| I[Email/Chat Notification]
+<img src="/docs/screenshots/06-architecture.png" width="100%" alt="Architecture diagram"/>
