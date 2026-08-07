@@ -1,6 +1,6 @@
-# Build Log
+# Environment Setup
 
-Notes from building Azure Budget Guard, Written as I build my 1st ever project.
+Notes from setting up the environment, for my 1st ever project
 
 ---
 
