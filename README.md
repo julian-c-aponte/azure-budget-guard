@@ -1,6 +1,5 @@
 # Azure Budget Guard
 
-[![Deploy to Azure](https://github.com/julian-c-aponte/azure-budget-guard/actions/workflows/deploy.yml/badge.svg)](https://github.com/julian-c-aponte/azure-budget-guard/actions)
 [![Bicep](https://img.shields.io/badge/IaC-Bicep-0078D4?logo=microsoftazure)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
