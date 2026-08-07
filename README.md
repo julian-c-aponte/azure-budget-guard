@@ -1,8 +1,6 @@
 # Azure Budget Guard
 
 
-## The Problem
-
 Azure Cost Management lets you set budgets, but when you cross them, Azure just sends an email. There is no real enforcement, your resources keep running and charging you until you manually shut them down. Whether you are a student protecting limited cloud credits or a corporation with a forgotten dev environment racking up weekend bills, this is a massive gap. I built this project to be the missing enforcement layer: an automated, event-driven bot that watches your spending and actually stops your resources when a limit is breached.
 
 ## The Solution
