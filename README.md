@@ -1,9 +1,7 @@
 # Azure Budget Guard
 
-[![Bicep](https://img.shields.io/badge/IaC-Bicep-0078D4?logo=microsoftazure)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> Azure Cost Management allows you to set budgets, but when you cross them, Azure only sends an email. I built this project as the missing enforcement layer: an automated, event-driven bot that watches spending and actively halts resources when limits are breached.
+Azure Cost Management allows you to set budgets, but when you cross them, Azure only sends an email. I built this project as the missing enforcement layer: an automated, event-driven bot that watches spending and actively halts resources when limits are breached.
 
 ## The Problem
 
