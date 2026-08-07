@@ -1,0 +1,14 @@
+# Secrets — never commit
+.env
+*.secret
+webhook-url.txt
+federated-*.json
+
+# Azure CLI
+.azure/
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
