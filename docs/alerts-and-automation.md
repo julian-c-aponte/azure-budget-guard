@@ -45,4 +45,6 @@ Building this required navigating several real-world cloud constraints that you 
 
 **Defensive parsing is mandatory.** Azure budget alerts have shipped in multiple JSON schemas over time. Rather than assuming a specific shape and breaking if it changes, my runbook dumps the raw request body and tries several known paths. It never lets a parse failure block the actual shutdown loop.
 
+**Repo-to-Azure Drift.** A major issue that I dealt with while adding the discord webhook functionality to the runbooks, is that I forgot my local files in Visual Studio Code don't sync with the Azure Portal. This led to me trying to debug an issue that didn't exist, because I forgot to update the runbook in the Azure Portal to match what I already have in my files.
+
 **Notifications must not block actions.** The Discord chat webhook runs in a `try/catch` block *after* the VMs are deallocated. A bot that announces what it's about to do, fails to send the message, and then halts the shutdown process is worse than a bot that stays quiet and stops the billing.
