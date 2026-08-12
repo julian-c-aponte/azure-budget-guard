@@ -138,6 +138,7 @@ try {
     }
 }
 catch {
+    Write-Output "[NOTIFY] Notification failed (non-fatal): $($_.Exception.Message)"
     Write-Warning "[NOTIFY] Notification failed (non-fatal): $($_.Exception.Message)"
 }
 

@@ -167,7 +167,7 @@ try {
 
     if (-not [string]::IsNullOrWhiteSpace($chatUrl)) {
         $msg = @{
-            content = "**Budget Guard**`nStopped $($stopped.Count) VM(s): $($stopped -join ', ')"
+            content = "**Budget Guard :: Emergency Stop**`nTrigger: $($alert.BudgetName) @ $($alert.Threshold)`nStopped $($stopped.Count) VM(s): $($stopped -join ', ')"
         } | ConvertTo-Json
 
         Invoke-RestMethod -Uri $chatUrl -Method Post -Body $msg -ContentType 'application/json'
@@ -175,6 +175,7 @@ try {
     }
 }
 catch {
+    Write-Output "[NOTIFY] Notification failed (non-fatal): $($_.Exception.Message)"
     Write-Warning "[NOTIFY] Notification failed (non-fatal): $($_.Exception.Message)"
 }
 
