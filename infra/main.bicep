@@ -107,25 +107,6 @@ resource nightlySchedule 'Microsoft.Automation/automationAccounts/schedules@2023
   }
 }
 
-resource nightlyJobSchedule 'Microsoft.Automation/automationAccounts/jobSchedules@2023-11-01' = {
-  parent: automationAccount
-  name: guid(automationAccount.id, 'nightly-2200', 'Stop-TaggedVMs')
-  properties: {
-    runbook: {
-      name: stopTaggedVMs.name
-    }
-    schedule: {
-      name: nightlySchedule.name
-    }
-    parameters: {
-      ResourceGroupName: resourceGroup().name
-      TagName: 'AutoShutdown'
-      TagValue: 'true'
-      DryRun: 'false'
-    }
-  }
-
-}
 
 output automationAccountId string = automationAccount.id
 output automationAccountName string = automationAccount.name
