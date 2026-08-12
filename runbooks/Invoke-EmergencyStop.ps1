@@ -162,6 +162,22 @@ foreach ($vm in $targets) {
     }
 }
 
+try {
+    $chatUrl = Get-AutomationVariable -Name 'ChatWebhookUrl' -ErrorAction SilentlyContinue
+
+    if (-not [string]::IsNullOrWhiteSpace($chatUrl)) {
+        $msg = @{
+            content = "**Budget Guard**`nStopped $($stopped.Count) VM(s): $($stopped -join ', ')"
+        } | ConvertTo-Json
+
+        Invoke-RestMethod -Uri $chatUrl -Method Post -Body $msg -ContentType 'application/json'
+        Write-Output "[NOTIFY] Chat notification sent."
+    }
+}
+catch {
+    Write-Warning "[NOTIFY] Notification failed (non-fatal): $($_.Exception.Message)"
+}
+
 $duration = [math]::Round(((Get-Date) - $startTime).TotalSeconds, 1)
 
 Write-Output "=========================================="
