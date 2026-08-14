@@ -1,0 +1,75 @@
+name: Deploy Budget Guard
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'infra/**'
+      - 'runbooks/**'
+      - '.github/workflows/deploy.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'infra/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write      # required for OIDC
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    name: Lint and validate Bicep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Bicep templates
+        run: |
+          az bicep install
+          for f in infra/*.bicep; do
+            echo "::group::Building $f"
+            az bicep build --file "$f"
+            echo "::endgroup::"
+          done
+
+      - name: Lint PowerShell runbooks
+        shell: pwsh
+        run: |
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
+          $issues = Invoke-ScriptAnalyzer -Path ./runbooks -Recurse -Severity Error,Warning
+          $issues | Format-Table -AutoSize
+          if ($issues | Where-Object Severity -eq 'Error') {
+            throw "PSScriptAnalyzer found blocking errors."
+          }
+
+  deploy:
+    name: Deploy to Azure
+    needs: validate
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure login via OIDC
+        uses: azure/login@v2
+        with:
+          client-id:       ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id:       ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy core infrastructure
+        uses: azure/arm-deploy@v2
+        with:
+          scope: resourcegroup
+          resourceGroupName: ${{ vars.AZURE_RG }}
+          template: infra/main.bicep
+          parameters: >
+            runbookBaseUri=https://raw.githubusercontent.com/${{ github.repository }}/main
+            scheduleStartTime=${{ vars.SCHEDULE_START_TIME }}
+          failOnStdErr: false
+
+      - name: Summary
+        run: echo "### Budget Guard deployed :rocket:" >> $GITHUB_STEP_SUMMARY
