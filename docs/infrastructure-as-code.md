@@ -52,7 +52,7 @@ Bicep generates role assignments using deterministic GUIDs based on the resource
 
 Understanding how to navigate this window is the reality of migrating legacy cloud setups into IaC.
 
-## 6. Register what the platform actually sends, not what the docs show
+## 6. GitHub's OIDC subject format wasn't what the docs showed
 
 GitHub's immutable subject claims changed the OIDC subject format. My federated credential registered repo:owner/name:ref:refs/heads/main, but GitHub presented repo:owner@<ownerID>/name@<repoID>:ref:refs/heads/main.
 
