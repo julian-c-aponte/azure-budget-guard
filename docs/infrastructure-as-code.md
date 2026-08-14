@@ -51,3 +51,11 @@ When importing manual infrastructure into templates, configuration is easy, but 
 Bicep generates role assignments using deterministic GUIDs based on the resource names. When this collided with the random GUID Azure generated during my manual setup, the deployment failed. Fixing it meant deleting the manual assignment and letting the template own it — leaving a brief window where the bot was unauthorized.
 
 Understanding how to navigate this window is the reality of migrating legacy cloud setups into IaC.
+
+## 6. Register what the platform actually sends, not what the docs show
+
+GitHub's immutable subject claims changed the OIDC subject format. My federated credential registered repo:owner/name:ref:refs/heads/main, but GitHub presented repo:owner@<ownerID>/name@<repoID>:ref:refs/heads/main.
+
+The numeric IDs make the subject survive a repository or account rename, which the plain format doesn't — a rename would silently break authentication.
+
+The AADSTS700213 error includes the presented subject, which is the fastest path to diagnosis: register what the platform actually sends rather than what the documentation example shows.
