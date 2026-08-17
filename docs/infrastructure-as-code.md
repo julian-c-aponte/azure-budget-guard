@@ -24,6 +24,8 @@ During deployment, I had a job schedule that reported a `Succeeded` deployment s
 
 The lesson generalized across the project: **verify the actual resource and its behavior, not the operation that created it.** An API returning `200 OK` doesn't mean the system works.
 
+<img src="/docs/screenshots/12-failed-bicep-deployment.png" width="100%" alt="Failed Bicep Deployment, that showed succeeded"/>
+
 ---
 
 ## 3. Defensive parsing prevents brittle automation
@@ -59,3 +61,5 @@ GitHub's immutable subject claims changed the OIDC subject format. My federated 
 The numeric IDs make the subject survive a repository or account rename, which the plain format doesn't. A rename would silently break authentication.
 
 The AADSTS700213 error includes the presented subject, which is the fastest path to diagnosis: register what the platform actually sends rather than what the documentation example shows.
+
+<img src="/docs/screenshots/17-github-actions.png" width="100%" alt="GitHub Actions Success"/>

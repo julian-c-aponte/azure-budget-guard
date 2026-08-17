@@ -75,7 +75,6 @@ You might notice the region mismatch — the VMs are in `westus2`, but the autom
 
 The system-assigned managed identity is the security core of this project. It is a service principal in Entra ID that lives and dies with the resource. Azure handles all internal credential rotation. Because the runbook authenticates by simply calling `Connect-AzAccount -Identity`, there are **zero passwords, keys, certificates, or connection strings in this entire solution.** Nothing can be leaked, and nothing can be accidentally committed to GitHub.
 
-> Microsoft retired the old, manual "Run As" accounts in 2023. Any tutorial still recommending them is stale.
 
 ---
 
