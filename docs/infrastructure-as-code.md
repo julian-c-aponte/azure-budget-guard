@@ -28,7 +28,7 @@ The lesson generalized across the project: **verify the actual resource and its 
 
 ## 3. Defensive parsing prevents brittle automation
 
-Azure budget alerts ship in two different JSON schemas — the legacy AIP shape and the newer Common Alert schema — depending on how they are deployed. Rather than assuming one shape and breaking on the other, the runbook inspects the raw payload, tries several known field paths, and never lets a parse failure block the shutdown.
+Azure budget alerts ship in two different JSON schemas — the legacy AIP shape and the newer Common Alert schemam, depending on how they are deployed. Rather than assuming one shape and breaking on the other, the runbook inspects the raw payload, tries several known field paths, and never lets a parse failure block the shutdown.
 
 When my Bicep deployment silently upgraded the alert schema, the system kept working without a single code change. Refusing to assume a single payload shape saved the circuit breaker.
 
@@ -38,7 +38,7 @@ When my Bicep deployment silently upgraded the alert schema, the system kept wor
 
 The webhook URL is the credential for the emergency stop, and Azure only displays it once at creation. Because it cannot be dynamically pulled into a Bicep template as an ARM output, it must be passed in out-of-band.
 
-Rotating it requires a fragile, multi-step manual process. If you delete the webhook but forget to update the action group, a real budget breach will POST into nothing — with no warning that your circuit breaker is dead.
+Rotating it requires a fragile, multi-step manual process. If you delete the webhook but forget to update the action group, a real budget breach will POST into nothing, with no warning that your circuit breaker is dead.
 
 This limitation proved exactly why enterprise environments rely on Managed Identities instead of shared secrets wherever possible.
 
@@ -48,7 +48,7 @@ This limitation proved exactly why enterprise environments rely on Managed Ident
 
 When importing manual infrastructure into templates, configuration is easy, but identity is hard.
 
-Bicep generates role assignments using deterministic GUIDs based on the resource names. When this collided with the random GUID Azure generated during my manual setup, the deployment failed. Fixing it meant deleting the manual assignment and letting the template own it — leaving a brief window where the bot was unauthorized.
+Bicep generates role assignments using deterministic GUIDs based on the resource names. When this collided with the random GUID Azure generated during my manual setup, the deployment failed. Fixing it meant deleting the manual assignment and letting the template own it, leaving a brief window where the bot was unauthorized.
 
 Understanding how to navigate this window is the reality of migrating legacy cloud setups into IaC.
 
@@ -56,6 +56,6 @@ Understanding how to navigate this window is the reality of migrating legacy clo
 
 GitHub's immutable subject claims changed the OIDC subject format. My federated credential registered repo:owner/name:ref:refs/heads/main, but GitHub presented repo:owner@<ownerID>/name@<repoID>:ref:refs/heads/main.
 
-The numeric IDs make the subject survive a repository or account rename, which the plain format doesn't — a rename would silently break authentication.
+The numeric IDs make the subject survive a repository or account rename, which the plain format doesn't. A rename would silently break authentication.
 
 The AADSTS700213 error includes the presented subject, which is the fastest path to diagnosis: register what the platform actually sends rather than what the documentation example shows.

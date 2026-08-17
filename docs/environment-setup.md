@@ -139,7 +139,7 @@ There is an obvious irony in manually deleting VMs while building an automated b
 
 ## Reproducing the Constraint Discovery
 
-If you are reproducing this on a restricted student account, do not copy my region and SKU values — you must derive your own.
+If you are reproducing this on a restricted student account, do not copy my region and SKU values, you must derive your own.
 
 I wrote a quick probe to figure out my allowed regions by spinning up free, instant virtual networks:
 
@@ -163,5 +163,3 @@ az vm list-skus --location westus2 --resource-type virtualMachines \
 ```
 
 Conflating region policy and SKU availability cost me hours. A SKU can exist in a region where you are forbidden to deploy, and vice versa. You have to find the intersection.
-
-> **A quick tip on Azure CLI errors:** if you see `RuntimeError: The content for this response was already consumed`, ignore it. It's a bug in the CLI's error handler. The real reason your deployment failed is always buried higher up, in the `Exception Details` block.
